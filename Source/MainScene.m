@@ -38,7 +38,7 @@ BOOL pauseScene;
 - (void) initialize {
     
     
-    countdown =  45;
+    countdown =  10;
     timeSinceUpdate = 0;
     self.timeUp = FALSE;
     actualTime = 0;

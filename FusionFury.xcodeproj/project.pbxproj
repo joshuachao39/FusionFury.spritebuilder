@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B4563D61904F03C00175440 /* RadialExplosion.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4563D51904F03C00175440 /* RadialExplosion.m */; };
 		3BBE6551190499BE00442C5C /* MenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE6550190499BE00442C5C /* MenuScene.m */; };
 		3BE12795190334FD0048A5B3 /* Grid.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE12794190334FD0048A5B3 /* Grid.m */; };
 		3BE12799190335240048A5B3 /* Tile.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE12798190335240048A5B3 /* Tile.m */; };
 		3BE1279C19035ABA0048A5B3 /* GameEnd.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE1279B19035ABA0048A5B3 /* GameEnd.m */; };
 		3BE127AB190420B50048A5B3 /* Explode.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE127A9190420B50048A5B3 /* Explode.m */; };
+		3BE9531E19063011006F440E /* CreditsScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BE9531D19063011006F440E /* CreditsScene.m */; };
 		B71F5911188484E7003F4D28 /* iPad-old.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5907188484E7003F4D28 /* iPad-old.png */; };
 		B71F5912188484E7003F4D28 /* iPad-old@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5908188484E7003F4D28 /* iPad-old@2x.png */; };
 		B71F5913188484E7003F4D28 /* iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = B71F5909188484E7003F4D28 /* iPad.png */; };
@@ -60,6 +62,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3B4563D41904F03C00175440 /* RadialExplosion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RadialExplosion.h; sourceTree = "<group>"; };
+		3B4563D51904F03C00175440 /* RadialExplosion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RadialExplosion.m; sourceTree = "<group>"; };
 		3BBE654F190499BE00442C5C /* MenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuScene.h; sourceTree = "<group>"; };
 		3BBE6550190499BE00442C5C /* MenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuScene.m; sourceTree = "<group>"; };
 		3BE12793190334FD0048A5B3 /* Grid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Grid.h; sourceTree = "<group>"; };
@@ -70,6 +74,8 @@
 		3BE1279B19035ABA0048A5B3 /* GameEnd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameEnd.m; sourceTree = "<group>"; };
 		3BE127A9190420B50048A5B3 /* Explode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Explode.m; sourceTree = "<group>"; };
 		3BE127AA190420B50048A5B3 /* Explode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Explode.h; sourceTree = "<group>"; };
+		3BE9531C19063011006F440E /* CreditsScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreditsScene.h; sourceTree = "<group>"; };
+		3BE9531D19063011006F440E /* CreditsScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreditsScene.m; sourceTree = "<group>"; };
 		B71F5907188484E7003F4D28 /* iPad-old.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iPad-old.png"; path = "Icons/iPad-old.png"; sourceTree = "<group>"; };
 		B71F5908188484E7003F4D28 /* iPad-old@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iPad-old@2x.png"; path = "Icons/iPad-old@2x.png"; sourceTree = "<group>"; };
 		B71F5909188484E7003F4D28 /* iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iPad.png; path = Icons/iPad.png; sourceTree = "<group>"; };
@@ -177,8 +183,12 @@
 		B77F1B2517B978D7009739AE = {
 			isa = PBXGroup;
 			children = (
+				3BE9531C19063011006F440E /* CreditsScene.h */,
+				3BE9531D19063011006F440E /* CreditsScene.m */,
 				3BBE654F190499BE00442C5C /* MenuScene.h */,
 				3BBE6550190499BE00442C5C /* MenuScene.m */,
+				3B4563D41904F03C00175440 /* RadialExplosion.h */,
+				3B4563D51904F03C00175440 /* RadialExplosion.m */,
 				3BE127AA190420B50048A5B3 /* Explode.h */,
 				3BE127A9190420B50048A5B3 /* Explode.m */,
 				3BE12793190334FD0048A5B3 /* Grid.h */,
@@ -343,12 +353,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B4563D61904F03C00175440 /* RadialExplosion.m in Sources */,
 				3BE12799190335240048A5B3 /* Tile.m in Sources */,
 				3BBE6551190499BE00442C5C /* MenuScene.m in Sources */,
 				B737893F1807617C0076A88C /* AppDelegate.m in Sources */,
 				B7378994180767190076A88C /* MainScene.m in Sources */,
 				B73789871807631A0076A88C /* main.m in Sources */,
 				3BE127AB190420B50048A5B3 /* Explode.m in Sources */,
+				3BE9531E19063011006F440E /* CreditsScene.m in Sources */,
 				3BE12795190334FD0048A5B3 /* Grid.m in Sources */,
 				3BE1279C19035ABA0048A5B3 /* GameEnd.m in Sources */,
 			);

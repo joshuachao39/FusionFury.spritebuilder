@@ -161,6 +161,70 @@ static const NSInteger START_TILES = 2;
     
    
 }
+
+- (void)mergeTileAtIndex:(NSInteger)x y:(NSInteger)y withTileAtIndex:(NSInteger)xOtherTile y:(NSInteger)yOtherTile withRadialExplosionAt: (int) xOtherTilePosition y:(int)yOtherTilePosition {
+    
+    // 1) update the game data
+    Tile *mergedTile = _gridArray[x][y];
+    Tile *otherTile = _gridArray[xOtherTile][yOtherTile];
+    self.score += mergedTile.value + otherTile.value;
+    otherTile.value *= 2;
+    otherTile.mergedThisRound = TRUE;
+    
+    _gridArray[x][y] = _noTile;
+    // 2) update the UI
+    CGPoint otherTilePosition = [self positionForColumn:xOtherTile row:yOtherTile];
+    CCActionMoveTo *moveTo = [CCActionMoveTo actionWithDuration:0.2f position:otherTilePosition];
+    CCActionRemove *remove = [CCActionRemove action];
+    CCActionCallBlock *mergeTile = [CCActionCallBlock actionWithBlock:^{
+        [otherTile updateValueDisplay];
+    }];
+    
+    CCActionCallBlock *removeOtherTile = [CCActionCallBlock actionWithBlock:^{
+        [otherTile removeFromParent];
+        _gridArray[xOtherTile][yOtherTile] = _noTile;
+    }];
+    
+    CCActionCallBlock *tileExplosion = [CCActionCallBlock actionWithBlock:^{
+        Explode * explosion = (Explode*)[CCBReader load:@"RadialExplosion"];
+        CGPoint _center = otherTile.position;
+        _center.x = (otherTile.position.x + 40);  //FINE TUNE ADJUSTMENTS LATER
+        _center.y = (otherTile.position.y + 40);  //FINE TUNE ADJUSTMENTS LATER
+        explosion.position = _center;
+        
+        [self addChild:explosion];
+        
+        [self removeRadialTiles:xOtherTile y:yOtherTile];
+    }];
+    
+    CCActionCallBlock *respawnTiles = [CCActionCallBlock actionWithBlock:^{
+        int emptyBlocks;
+        for (int i=0;i< GRID_SIZE; i++) {
+            for (int j=0;j< GRID_SIZE; j++) {
+                Tile *t = _gridArray[i][j];
+                if (![t isEqual:_noTile]) {
+                    
+                }
+                else {
+                    emptyBlocks = emptyBlocks +1;
+                }
+            }
+        }
+        if (emptyBlocks == 16) {
+            [self spawnStartTiles];
+        }
+        else {
+        }
+        
+    }];
+    
+    CCActionSequence *sequence = [CCActionSequence actionWithArray:@[moveTo, mergeTile, remove, removeOtherTile, tileExplosion, respawnTiles]];
+    [mergedTile runAction:sequence];
+    
+}
+
+
+
 - (void)mergeTileAtIndex:(NSInteger)x y:(NSInteger)y withTileAtIndex:(NSInteger)xOtherTile y:(NSInteger)yOtherTile shouldbeDeleted: (int)xOtherTilePosition y:(int)yOtherTilePosition {
     
     // 1) update the game data
@@ -221,11 +285,33 @@ static const NSInteger START_TILES = 2;
     [mergedTile runAction:sequence];
     
     
-    
-    
-
-    
 }
+- (void) removeRadialTiles: (NSInteger)column y: (NSInteger) row {
+    for (int j=row-1; j < row+2; j++ ) {
+        NSLog(@"%d", j);
+        for (int i = column-1; i < column+2; i++) {
+             NSLog(@"%d", i);
+            if (i<0 || i>3 || j<0 || j>3) {
+                
+            }
+            else {
+                
+                Tile *tileToBeRemoved = _gridArray[i][j];
+            
+                if ([tileToBeRemoved isEqual:_noTile]) {
+                
+                } else {
+                    self.score = tileToBeRemoved.value + self.score;
+                    [tileToBeRemoved removeFromParent];
+                    _gridArray[i][j] = _noTile;
+                }
+            }
+            
+        }
+    }
+}
+
+
 
 - (void) removeCrossTiles: (NSInteger)column y: (NSInteger)row {
     for (int i=0; i< GRID_SIZE; i++) {
@@ -235,7 +321,7 @@ static const NSInteger START_TILES = 2;
         
         } else {
             self.score = tileToBeRemoved.value + self.score;
-            [tileToBeRemoved removeFromParent];
+            [tileToBeRemoved removeFromParent];              // is there any way to remove from parent with fade transition?
             _gridArray[i][row] = _noTile;
         }
         
@@ -247,7 +333,7 @@ static const NSInteger START_TILES = 2;
             
         } else {
             self.score = tileToBeRemoved.value + self.score;
-            [tileToBeRemoved removeFromParent];
+            [tileToBeRemoved removeFromParent];              // is there any way to remove from parent with fade transition?
             _gridArray[column][i] = _noTile;
         }
     }
@@ -280,8 +366,15 @@ static const NSInteger START_TILES = 2;
     gameEndPopover.positionType = CCPositionTypeNormalized;
     gameEndPopover.position = ccp(0.5, 0.5);
     gameEndPopover.zOrder = INT_MAX;
+    //gameEndPopover.opacity = 50;
+  [self addChild:gameEndPopover];
     [gameEndPopover setMessage:message score:self.score];
-    [self addChild:gameEndPopover];
+    
+    
+    //animation here
+    
+    
+                         // is there any way to add child with fade transition?
     CCLOG(@"%@",message);
     NSNumber *highScore = [[NSUserDefaults standardUserDefaults] objectForKey:@"highscore"];
     if (self.score > [highScore intValue]) {
@@ -402,14 +495,14 @@ static const NSInteger START_TILES = 2;
                 else if (tile.value == 1 && otherTile.value == 92 && !otherTile.mergedThisRound) {
                     int otherTileXPosition = otherTile.position.x;
                     int otherTileYPosition = otherTile.position.y;
-                    [self mergeTileAtIndex:currentX y:currentY withTileAtIndex:otherTileX y:otherTileY shouldbeDeleted:otherTileXPosition y:otherTileYPosition];
+                    [self mergeTileAtIndex:currentX y:currentY withTileAtIndex:otherTileX y:otherTileY withRadialExplosionAt:otherTileXPosition y:otherTileYPosition];
                     movedTilesThisRound = TRUE;
                     
                     
                 } else if (tile.value == 92 && otherTile.value == 1 && !otherTile.mergedThisRound) {
                     int otherTileXPosition = otherTile.position.x;
                     int otherTileYPosition = otherTile.position.y;
-                    [self mergeTileAtIndex:currentX y:currentY withTileAtIndex:otherTileX y:otherTileY shouldbeDeleted:otherTileXPosition y:otherTileYPosition];
+                    [self mergeTileAtIndex:currentX y:currentY withTileAtIndex:otherTileX y:otherTileY withRadialExplosionAt:otherTileXPosition y:otherTileYPosition];
                     movedTilesThisRound = TRUE;
                     
                 } else if (tile.value == 92 && otherTile.value == 92 && !otherTile.mergedThisRound) {

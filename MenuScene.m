@@ -14,7 +14,18 @@
 
 - (void) play {
     CCScene *gameplayScene = [CCBReader loadAsScene:@"MainScene"];
-    [[CCDirector sharedDirector] replaceScene:gameplayScene withTransition:[CCTransition transitionCrossFadeWithDuration:2.0f]];
+    [[CCDirector sharedDirector] replaceScene:gameplayScene withTransition:[CCTransition transitionCrossFadeWithDuration:1.0f]];
 }
+
+- (void) credits {
+    CCScene *creditScene = [CCBReader loadAsScene :@"CreditsScene"];
+    [[CCDirector sharedDirector] replaceScene:creditScene withTransition:[CCTransition transitionCrossFadeWithDuration:1.0f]];
+}
+
+// add options button, credits button, T-10 mode, time trial mode
+
+
+
+
 
 @end
